@@ -1,6 +1,7 @@
 require_relative "config.rb"
 require_relative "queries.rb"
 require_relative "environment.rb"
+require_relative "coin_flip.rb"
 
 Challonge::API.username = Access.username
 Challonge::API.key = Access.api_key
@@ -28,7 +29,7 @@ teams["api_key"] = Challonge::API.key # to be moved to teams.rb
 RestClient.post(url, teams)
 
 t.start! # t.post(:start)
-
+binding.pry
 # m = t.matches(:first)
 # match_url = "https://api.challonge.com/v1/tournaments/" + m.tournament.id.to_s + "/matches/" + m.id.to_s + ".json"
 
@@ -44,7 +45,7 @@ full_tournament = 0..14
 
 def update_matches(t, i)
     m = t.matches[i]
-    m.scores_csv = '5-1'
+    m.scores_csv = sim_playoff_series
     # change however appropriate => for name: m.player1.name
     m.winner_id = m.player1_id
     m

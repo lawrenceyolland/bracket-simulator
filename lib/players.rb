@@ -34,3 +34,6 @@ vancouver_canucks = ["Elias Pettersson", "Brock Boeser", "Bo Horvat", "Alexander
 anaheim_ducks = ["Ryan Getzlav", "Jakob Silfverberg", "Rickard Rakell", "Adam Henrique", "Nick Ritchie"]
 edmonton_oilers = ["Connor McDavid", "Leon Draisaitl", "Ryan Nugent-Hopkins", "Darnell Nurse", "Alex Chiasson"]
 los_angeles_kings = ["Drew Doughty", "Anze Kopitar", "Dustin Brown", "Ilya Kovalchuk", "Tyler Toffoli"]
+
+default_team = ["Grayne Wetzky", "Doug 'The Thug' Glatt", "Ross 'The Boss' Rhea", "Happy Gilmore", "Gordan Bombay"]
+

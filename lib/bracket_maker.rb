@@ -51,13 +51,14 @@ end
 
 for i in full_tournament
     update_matches(t,i).save
+    Launchy::Browser.run(t.live_image_url)
 end
 
-Launchy::Browser.run(t.live_image_url)
+# Launchy::Browser.run(t.live_image_url)
 if t.matches(:first).player1_id == t.matches(:first).winner_id 
     puts "want them chips with the dip" 
 else
     puts "unfortunately you lost"
 end
-
+# binding.pry
 t.post(:finalize)

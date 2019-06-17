@@ -1,4 +1,4 @@
 class Division < ActiveRecord::Base
-    belongs_to :conferences
+    belongs_to :conference
     has_many :teams
 end

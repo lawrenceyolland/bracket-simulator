@@ -10,6 +10,7 @@ t.name = 'Bracket Generator Test'
 t.url = SecureRandom.hex(10) # randomly generates a 10 character string
 t.tournament_type = 'single elimination'
 t.save
+
 # t.errors.full_messages => useful if errors are thrown
 
 # query_params = {

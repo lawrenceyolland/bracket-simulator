@@ -29,7 +29,7 @@ teams["api_key"] = Challonge::API.key # to be moved to teams.rb
 RestClient.post(url, teams)
 
 t.start! # t.post(:start)
-binding.pry
+# binding.pry
 # m = t.matches(:first)
 # match_url = "https://api.challonge.com/v1/tournaments/" + m.tournament.id.to_s + "/matches/" + m.id.to_s + ".json"
 
@@ -45,9 +45,7 @@ full_tournament = 0..14
 
 def update_matches(t, i)
     m = t.matches[i]
-    m.scores_csv = sim_playoff_series # defined in sim_series
-    # change however appropriate => for name: m.player1.name
-    m.winner_id = m.player1_id
+    m.scores_csv = sim_playoff_series(m) # defined in sim_series
     m
 end
 

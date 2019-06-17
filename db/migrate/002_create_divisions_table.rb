@@ -1,4 +1,4 @@
-class CreateDivisionsTable < ActiveRecord::Migration
+class CreateDivisionsTable < ActiveRecord::Migration[4.2]
     def change
         create_table :divisions do |t|
             t.string :name

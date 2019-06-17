@@ -29,16 +29,8 @@ teams["api_key"] = Challonge::API.key # to be moved to teams.rb
 RestClient.post(url, teams)
 
 t.start! # t.post(:start)
-# binding.pry
-# m = t.matches(:first)
-# match_url = "https://api.challonge.com/v1/tournaments/" + m.tournament.id.to_s + "/matches/" + m.id.to_s + ".json"
 
-# query_params = {
-#     "api_key"=>Challonge::API.key,
-#     "match[scores_csv]"=> '1-0',
-#     "match[winner_id]"=> m.player1_id
-# }
-# RestClient.post(url, query_params)
+# match_url = "https://api.challonge.com/v1/tournaments/" + m.tournament.id.to_s + "/matches/" + m.id.to_s + ".json"
 
 # t.live_image_url / t.full_challonge_url are available 
 full_tournament = 0..14
@@ -51,10 +43,9 @@ end
 
 for i in full_tournament
     update_matches(t,i).save
-    Launchy::Browser.run(t.live_image_url)
 end
 
-# Launchy::Browser.run(t.live_image_url)
+Launchy::Browser.run(t.live_image_url)
 if t.matches(:first).player1_id == t.matches(:first).winner_id 
     puts "want them chips with the dip" 
 else

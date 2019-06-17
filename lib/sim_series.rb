@@ -9,10 +9,8 @@ def sim_playoff_series
 
         puts "team1:#{team_1_goals} team2:#{team_2_goals}"
     
-        ot = rand(1...2)
-
+        ot = rand(0..1)
         team_1_goals == team_2_goals ? team_1_goals+=ot_options[ot] : team_1_goals # overtime 
-        # team_1_goals.to_i == 0 && team_2_goals.to_i == 0 ? team_1_goals+=1 : team_1_goals
         score << "#{team_1_goals}-#{team_2_goals}"
     end
     score.join(",")

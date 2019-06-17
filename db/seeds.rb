@@ -2,6 +2,7 @@ require_relative "../app/models/conferences.rb"
 require_relative "../app/models/divisions.rb"
 require_relative "../app/models/teams.rb"
 require_relative "../app/models/players.rb"
+require_relative "../lib/players.rb"
 
 # Set up conferences
 eastern = Conference.create(name: "Eastern Conference")
@@ -57,3 +58,9 @@ chicago_blackhawks = Team.create(name: "Chicago Blackhawks", division_id: 4)
 minnesota_wild = Team.create(name: "Minnesota Wild", division_id: 4)
 
 default_team = Team.create()
+
+player_array.each_with_index do |team,index|
+    team.each do |name|
+        Player.create(name: name, team_id: index+1)
+    end  
+end  

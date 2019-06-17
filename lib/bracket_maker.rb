@@ -1,4 +1,4 @@
-require_relative "config.rb"
+require_relative "../config/access.rb"
 require_relative "queries.rb"
 require_relative "environment.rb"
 require_relative "sim_series.rb"
@@ -44,12 +44,13 @@ end
 for i in full_tournament
     update_matches(t,i).save
 end
-
-Launchy::Browser.run(t.live_image_url)
+# binding.pry
+# Launchy::Browser.run(t.live_image_url)
 if t.matches(:first).player1_id == t.matches(:first).winner_id 
     puts "want them chips with the dip" 
 else
     puts "unfortunately you lost"
 end
-# binding.pry
 t.post(:finalize)
+binding.pry
+0

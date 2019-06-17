@@ -35,7 +35,20 @@ class CommandLineInterface
         puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
     end
 
+    def stanley
+    Catpix::print_image "/Users/pasbynumbers/Downloads/stanley-cup-jay-fhjay-fh-stanley-cup-clip-art-469_1000.jpg",
+  :limit_x => 1.0,
+  :limit_y => 0,
+  :center_x => true,
+  :center_y => true,
+  :bg => "white",
+  :bg_fill => true,
+  :resolution => "medium"
+    end
+
 end
 
 cli = CommandLineInterface.new
+
+cli.stanley
 cli.greet

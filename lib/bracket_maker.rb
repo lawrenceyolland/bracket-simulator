@@ -106,7 +106,6 @@ if answer == 3
         update_matches(t,14).save
 end
 
-
 t.post(:finalize)
 
 

@@ -2,6 +2,10 @@
 
 
 ### What it does ...
+This is a Stanley Cup Playoff Simulator, where you can create a team or choose an existing team and play them against the rest of the league to fight for the Stanley Cup!
+ - Create your team and players
+ - Create the playoff bracket of your choice
+ - Compare player and team stats after each round of the competition
 
  **Resource:** (include challonge api link)
 

@@ -22,17 +22,28 @@
 
 def team_hash
         team_hash = {"participants"=>[]}
-        for i in input_ids      
-                team_hash["participants"] << {"name"=>Team.find_by(id: i).name}
+        # for i in input_ids      
+        #         team_hash["participants"] << {"name"=>Team.find_by(id: i).name}
+        # end
+        for i in sorted_teams.flatten
+                team_hash["participants"] << {"name"=>Team.find_by(name: i).name}
         end
         team_hash
 end
 
-def input_ids
-team_array = []
-until team_array.count == 16
-        input = gets.chomp
-        team_array << input.to_i
-end
-team_array
-end
+# test = [["Montreal Canadiens", "Toronto Maple Leafs", "Boston Bruins", "Detroit Redwings"],
+# ["New York Rangers", "Philadelphia Flyers", "New York Islanders", "Pittsburgh Penguins"],
+# ["San Jose Sharks", "Las Vegas Golden Knights", "Anaheim Ducks", "Los Angeles Kings"],
+# ["Colorado Avalanche", "Chicago Blackhawks", "Nashville Predators", "St Louis Blues"]]
+
+# for i in test.flatten
+#         team_hash["participants"] << {"name"=>Team.find_by(name: i).name}
+# end
+# def input_ids
+# team_array = []
+# until team_array.count == 16
+#         input = gets.chomp
+#         team_array << input.to_i
+# end
+# team_array
+# end

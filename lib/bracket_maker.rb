@@ -52,5 +52,7 @@ else
     puts "unfortunately you lost"
 end
 t.post(:finalize)
-binding.pry
-0
+# binding.pry
+# 0
+
+end

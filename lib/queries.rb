@@ -1,24 +1,24 @@
 
 # # this actually uses seeding. so 1 v 16 / 2 v 15 ...!
-# def team_hash
-#     query_params = {"participants"=> [
-#         {"name"=>"Nashville"},
-#         {"name"=>"Colorado"},
-#         {"name"=>"Anaheim"},
-#         {"name"=>"Tampa Bay"},
-#         {"name"=>"Calgary"},
-#         {"name"=>"Toronto"},
-#         {"name"=>"Rangers"},
-#         {"name"=>"St Louis"},
-#         {"name"=>"San Jose"},
-#         {"name"=>"Las Vegas"},
-#         {"name"=>"Washington"},
-#         {"name"=>"Dallas"},
-#         {"name"=>"Minnesota"},
-#         {"name"=>"Detroit"},
-#         {"name"=>"Islanders"},
-#         {"name"=>"New Jersey"}]}
-# end
+def default_team
+    default_team = {"participants"=> [
+         {"name"=>"Tampa Bay Lightning"},
+         {"name"=>"Nashville Predators"},
+         {"name"=>"Calgary Flames"},
+         {"name"=>"Washington Capitals"},
+         {"name"=>"New York Islanders"},
+         {"name"=>"San Jose Sharks"},
+         {"name"=>"Winnipeg Jets"},
+         {"name"=>"Boston Bruins"},
+         {"name"=>"Toronto Maple Leafs"},
+         {"name"=>"St Louis Blues"},
+         {"name"=>"Las Vegas Golden Knights"},
+         {"name"=>"Pittsburgh Penguins"},
+         {"name"=>"Carolina Hurricanes"},
+         {"name"=>"Colorado Avalanche"},
+         {"name"=>"Dallas Stars"},
+         {"name"=>"Columbus Blue Jackets"}]}
+end
 
 
 

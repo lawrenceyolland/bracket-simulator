@@ -35,31 +35,65 @@ class CommandLineInterface
   # :resolution => "medium"
   #   end
 
-    def get_division_teams(id)
-      Team.all.collect {|team| team.name if team.division_id == id}.compact.flatten
-    end
+  def get_division_teams(id)
+    Team.all.collect {|team| team.name if team.division_id == id}.compact.flatten
+  end
 
+
+  puts "Would you like to use the 2019 playoff bracket? (y/n)"
+  input = gets.chomp
+  if input == 'y'
+    def team_hash
+
+    team_hash = {"participants"=> [
+        {"name"=>"Tampa Bay Lightning"},
+        {"name"=>"Nashville Predators"},
+        {"name"=>"Calgary Flames"},
+        {"name"=>"Washington Capitals"},
+        {"name"=>"New York Islanders"},
+        {"name"=>"San Jose Sharks"},
+        {"name"=>"Winnipeg Jets"},
+        {"name"=>"Boston Bruins"},
+        {"name"=>"Toronto Maple Leafs"},
+        {"name"=>"St Louis Blues"},
+        {"name"=>"Las Vegas Golden Knights"},
+        {"name"=>"Pittsburgh Penguins"},
+        {"name"=>"Carolina Hurricanes"},
+        {"name"=>"Colorado Avalanche"},
+        {"name"=>"Dallas Stars"},
+        {"name"=>"Columbus Blue Jackets"}]}
+        team_hash
+    end
+  elsif input == 'n'
+ 
     def pick_teams
       prompt = TTY::Prompt.new
+
       playoff_teams = []
-      playoff_teams << prompt.multi_select("Select Teams from Atlantic Division:", get_division_teams(1))
-      playoff_teams << prompt.multi_select("Select Teams from Metropolitan Division:", get_division_teams(2))
-      playoff_teams << prompt.multi_select("Select Teams from Pacific Divsion:", get_division_teams(3))
-      playoff_teams << prompt.multi_select("Select Teams from Central Divsion:", get_division_teams(4))
+      playoff_teams << prompt.multi_select("Select Teams from Atlantic Division:", get_division_teams(1), max:4)
+      playoff_teams << prompt.multi_select("Select Teams from Metropolitan Division:", get_division_teams(2), max:4)
+      playoff_teams << prompt.multi_select("Select Teams from Pacific Divsion:", get_division_teams(3), max:4)
+      playoff_teams << prompt.multi_select("Select Teams from Central Divsion:", get_division_teams(4), max:4)
+      playoff_teams
+      end
+    
+    
+    def sort_teams
       sorted_teams = []
-      
+      unsorted_teams = pick_teams
       pos = [0,8,12,4, 5,13,9,1, 2,10,14,6, 7,15,11,3]
         for i in pos
-          sorted_teams << playoff_teams.flatten[i]
+          sorted_teams << unsorted_teams.flatten[i]
         end
         sorted_teams
     end
-
-    def team_hash
+      def team_hash
       team_hash = {"participants"=>[]}
-      for i in pick_teams.flatten
+      for i in sort_teams.flatten
               team_hash["participants"] << {"name"=>Team.find_by(name: i).name}
       end
       team_hash
     end
+  end
+
 end

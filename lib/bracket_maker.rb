@@ -14,6 +14,17 @@ t.save
 
 url = "https://api.challonge.com/v1/tournaments/" + t.id.to_s + "/participants/bulk_add.json"
 teams = cli.team_hash
+
+
+
+# def player_team(teams)
+#     prompt = TTY::Prompt.new
+#     player_team = prompt.multi_select("Select your team:", teams)
+#     player_team
+# end
+# team_of_player = player_team
+
+
 teams["api_key"] = Challonge::API.key 
 RestClient.post(url, teams)
 t.start! # t.post(:start)
@@ -56,7 +67,9 @@ end
 for i in full_tournament
     update_matches(t,i).save
 end
-# Launchy::Browser.run(t.live_image_url)
+binding.pry
+Launchy::Browser.run(t.live_image_url)
+# t.live_image_url
 # if t.matches(:first).player1_id == t.matches(:first).winner_id 
 #     puts "want them chips with the dip" 
 # else

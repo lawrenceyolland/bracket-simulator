@@ -12,5 +12,5 @@ tmp
 
 db/*.db
 
-config.rb
+access.rb
 bracket.rb

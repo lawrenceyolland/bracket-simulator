@@ -8,9 +8,9 @@
 #   :bg_fill => true,
 #   :resolution => "high"
 
-# puts "Welcome to the"
-# a = Artii::Base.new :font => 'slant'
-# puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
+puts "Welcome to the"
+a = Artii::Base.new :font => 'slant'
+puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
 
 # puts Paint['Ruby', :red]
 
@@ -70,10 +70,10 @@ class CommandLineInterface
       prompt = TTY::Prompt.new
 
       playoff_teams = []
-      playoff_teams << prompt.multi_select("Select Teams from Atlantic Division:", get_division_teams(1), max:4)
-      playoff_teams << prompt.multi_select("Select Teams from Metropolitan Division:", get_division_teams(2), max:4)
-      playoff_teams << prompt.multi_select("Select Teams from Pacific Divsion:", get_division_teams(3), max:4)
-      playoff_teams << prompt.multi_select("Select Teams from Central Divsion:", get_division_teams(4), max:4)
+      playoff_teams << prompt.multi_select("Select 4 Teams from Atlantic Division:", get_division_teams(1), max:4, per_page: 10)
+      playoff_teams << prompt.multi_select("Select 4 Teams from Metropolitan Division:", get_division_teams(2), max:4, per_page: 10)
+      playoff_teams << prompt.multi_select("Select 4 Teams from Pacific Divsion:", get_division_teams(3), max:4, per_page: 10)
+      playoff_teams << prompt.multi_select("Select 4 Teams from Central Divsion:", get_division_teams(4), max:4, per_page: 10)
       playoff_teams
       end
     
@@ -95,5 +95,10 @@ class CommandLineInterface
       team_hash
     end
   end
+#   def player_team
+#     prompt = TTY::Prompt.new
+#     player_team = prompt.multi_select("Select your team:", team_hash)
+#     player_team
+# end
 
 end

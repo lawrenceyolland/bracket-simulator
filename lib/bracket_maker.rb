@@ -15,21 +15,16 @@ t.save
 url = "https://api.challonge.com/v1/tournaments/" + t.id.to_s + "/participants/bulk_add.json"
 teams = cli.team_hash
 
-
-
-# def player_team(teams)
-#     prompt = TTY::Prompt.new
-#     player_team = prompt.multi_select("Select your team:", teams)
-#     player_team
-# end
-# team_of_player = player_team
+def player_team
+    prompt = TTY::Prompt.new
+    player_team = prompt.multi_select("Select your team:", teams)
+    player_team
+end
 
 
 teams["api_key"] = Challonge::API.key 
 RestClient.post(url, teams)
 t.start! # t.post(:start)
-
-full_tournament = 0..14
 
 def sim_playoff_series(m)
     score = []
@@ -64,17 +59,54 @@ def update_matches(t, i)
     m
 end
 
-for i in full_tournament
+for i in 0..7
     update_matches(t,i).save
 end
-binding.pry
-Launchy::Browser.run(t.live_image_url)
+# binding.pry
+live_url = "https://challonge.com/" + t.url + "/fullscreen"
+Launchy::Browser.run(live_url)
 # t.live_image_url
 # if t.matches(:first).player1_id == t.matches(:first).winner_id 
 #     puts "want them chips with the dip" 
 # else
 #     puts "unfortunately you lost"
 # end
+
+prompt = TTY::Prompt.new
+answer = prompt.select("First Round Complete:") do |menu|
+    menu.choice "Team Stats", 1
+    menu.choice "Player Stats", 2
+    menu.choice "Simulate Second Round", 3
+end
+if answer == 3
+    for i in 8..11
+        update_matches(t,i).save
+    end
+end
+
+prompt = TTY::Prompt.new
+answer = prompt.select("Second Round Complete:") do |menu|
+    menu.choice "Team Stats", 1
+    menu.choice "Player Stats", 2
+    menu.choice "Simulate Conference Finals", 3
+end
+if answer == 3
+    for i in 12..13
+        update_matches(t,i).save
+    end
+end
+
+prompt = TTY::Prompt.new
+answer = prompt.select("Conference Finals Complete:") do |menu|
+    menu.choice "Team Stats", 1
+    menu.choice "Player Stats", 2
+    menu.choice "Simulate Stanley Cup Final", 3
+end
+if answer == 3
+        update_matches(t,14).save
+end
+
+
 t.post(:finalize)
 
 

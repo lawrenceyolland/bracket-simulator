@@ -9,5 +9,11 @@ gem "rake"
 gem "challonge-api"
 gem "launchy"
 gem "rest-client"
+gem 'artii'
+gem 'tco'
+gem 'paint'
+gem 'tty-prompt'
+gem 'catpix'
+gem "espeak-ruby"
 
 

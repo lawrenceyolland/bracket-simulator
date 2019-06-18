@@ -1,5 +1,0 @@
-require 'challonge-api'
-require 'pry'
-require 'launchy'
-require 'securerandom'
-require 'rest-client'

@@ -1,4 +1,7 @@
 
+require_relative '../config/environment.rb'
+
+cli = CommandLineInterface.new
 
 Challonge::API.username = Access.username
 Challonge::API.key = Access.api_key
@@ -9,11 +12,6 @@ t.url = SecureRandom.hex(10) # randomly generates a 10 character string
 t.tournament_type = 'single elimination'
 t.save
 
-
-# class Bracket
-    # def initialize(team_list:)
-    #     @team_list = team_list
-    # end
 url = "https://api.challonge.com/v1/tournaments/" + t.id.to_s + "/participants/bulk_add.json"
 teams = cli.team_hash
 teams["api_key"] = Challonge::API.key 
@@ -25,9 +23,7 @@ full_tournament = 0..14
 def sim_playoff_series(m)
     score = []
     ot_options = [1,-1]
-    # 7.times do
     until [bool_count(score, true), bool_count(score, false)].any?(4)
-        # score_tally(score).count(true) == 4 || score_tally(score).count(false) == 4
         total_goals_possible = rand(1..10) #10
         team_1_goals = rand(total_goals_possible)
         team_2_goals = (total_goals_possible-team_1_goals)        
@@ -35,9 +31,7 @@ def sim_playoff_series(m)
         team_1_goals == team_2_goals ? team_1_goals+=ot_options[ot] : team_1_goals # overtime 
         score << "#{team_1_goals}-#{team_2_goals}"
     end
-    # end
     if bool_count(score, true) > bool_count(score, false)
-        # score_tally(score).count(true) > score_tally(score).count(false)
         m.winner_id = m.player1_id 
     else 
         m.winner_id = m.player2_id 

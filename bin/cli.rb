@@ -46,6 +46,14 @@ class CommandLineInterface
   :resolution => "medium"
     end
 
+    def pick_teams
+      div1_choices = ["team 1", "team 2", "team 3", "team 4", "team 5"]
+      div1_choices = ["team 1", "team 2", "team 3", "team 4", "team 5"]
+      div1_choices = ["team 1", "team 2", "team 3", "team 4", "team 5"]
+      div1_choices = ["team 1", "team 2", "team 3", "team 4", "team 5"]
+      prompt.multi_select("Select Teams:", choices)
+    end
+
 end
 
 cli = CommandLineInterface.new

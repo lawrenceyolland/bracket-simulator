@@ -1,6 +1,6 @@
 require_relative "../config/access.rb"
+require_relative "../config/environment.rb"
 require_relative "queries.rb"
-require_relative "environment.rb"
 require_relative "sim_series.rb"
 
 Challonge::API.username = Access.username

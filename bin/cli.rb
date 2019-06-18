@@ -70,16 +70,14 @@ class CommandLineInterface
         #  binding.pry
         sorted_teams
     end
+
     def team_hash
       team_hash = {"participants"=>[]}
-      # for i in input_ids      
-      #         team_hash["participants"] << {"name"=>Team.find_by(id: i).name}
-      # end
-      for i in sorted_teams.flatten
+      for i in pick_teams.flatten
               team_hash["participants"] << {"name"=>Team.find_by(name: i).name}
       end
       team_hash
-  end
+    end
 
 # teams = [1,2,3,4, 5,6,7,8, 9,10,11,12, 13,14,15,16]
 # def sort_teams

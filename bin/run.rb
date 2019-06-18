@@ -23,4 +23,4 @@ cli = CommandLineInterface.new
 # cli.stanley
 cli.greet
 cli.pick_teams
-cli.sort_teams
+# cli.sort_teams

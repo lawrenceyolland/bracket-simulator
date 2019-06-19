@@ -21,7 +21,7 @@ end
 #     player.total_goals = 0
 #     player.save 
 # end
-
+# binding.pry
 url = "https://api.challonge.com/v1/tournaments/" + t.id.to_s + "/participants/bulk_add.json"
 teams = cli.team_hash
 
@@ -138,20 +138,29 @@ end
 def make_team_table(answer)
     team = Team.all.find_by(name: answer)
     puts team.img_path
-    puts "_____________________________________________________________________________"
-    puts "|    WINS     |   LOSSES     |    GAMES PLAYED    |       CHIPS             |"
-    puts "|#{team.wins} |#{team.losses}|#{team.games_played}|#{team.championship_wins}|"
+    rows = []
+    rows << [team.name, team.wins, team.losses, team.games_played, team.championship_wins]
+    table = Terminal::Table.new :headings => ["Name", "Wins", "Losses", "Games Played", "Championship Wins"], :rows => rows 
+    puts table
 end
 
 def make_player_table(answer)
     team = Team.all.find_by(name: answer)
     puts team.img_path
-
+    players = Player.all.select { |p| p.team_id == team.id}
+    rows = []
+    players.each { |e| rows << [e.name, e.series_goals, e.total_goals]} # add goals per game
+    table = Terminal::Table.new :headings => ["Name", "Series Goals", "Total Goals"], :rows => rows 
+    puts table
 end
+
+binding.pry
+# answer = "Washington Capitals"
 # first round
 for i in 0..7
     update_matches(t,i).save
 end
+
 live_url = "https://challonge.com/" + t.url + "/fullscreen"
 Launchy::Browser.run(live_url)
 

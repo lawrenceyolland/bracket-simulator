@@ -21,11 +21,11 @@ def player_team
     player_team
 end
 
-
 teams["api_key"] = Challonge::API.key 
 RestClient.post(url, teams)
 t.start! # t.post(:start)
 
+#~~~~~~~~~~~~~~~~~RANDOMISE SERIES SCORES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def sim_playoff_series(m)
     score = []
     ot_options = [1,-1]
@@ -42,7 +42,8 @@ def sim_playoff_series(m)
     else 
         m.winner_id = m.player2_id 
     end
-    score_csv = score.join(",")
+    # score_csv = score
+    score
 end
 
 def score_tally(score)
@@ -52,26 +53,49 @@ end
 def bool_count(score, bool)
     score_tally(score).count(bool)
 end
+# ~~~~~~~~~ Assign goals to players ~~~~~~~~~~~~~~~~#
+# score = ["6-1","3-2","1-2","5-1","4-5","4-3"]
+
+# m.player1.name
+binding.pry
+team1_id = Team.all.find_by(name: m.player1.name).id
+team2_id = Team.all.find_by(name: m.player2.name).id
+
+Player.all.select { |p| p.team_id == team1_id}
+
+# def give_goals(player_selector, goal_assigner)
+#     puts "player#{player_selector} scored #{goal_assigner} goals"
+# end
+
+# def assign_goals(score)
+#     current_goals = score.sum{|s| s[0].to_i}
+#     until current_goals == 0
+#         player_selector = rand(4)
+#         goal_assigner = rand(1..current_goals)
+#         current_goals = current_goals - goal_assigner
+#         give_goals(player_selector, goal_assigner)
+#     end
+# end
+
+
+#~~~~~~~~~~~~~~~  RUN SERIES AND SUBMIT MATCHES ~~~~~~~~~~~~~~~#
 
 def update_matches(t, i)
     m = t.matches[i]
-    m.scores_csv = sim_playoff_series(m) # defined in sim_series
+    m.scores_csv = sim_playoff_series(m).join(",") # defined in sim_series
+    # add goal assign method
     m
 end
 
+# first round
 for i in 0..7
     update_matches(t,i).save
 end
-# binding.pry
 live_url = "https://challonge.com/" + t.url + "/fullscreen"
 Launchy::Browser.run(live_url)
-# t.live_image_url
-# if t.matches(:first).player1_id == t.matches(:first).winner_id 
-#     puts "want them chips with the dip" 
-# else
-#     puts "unfortunately you lost"
-# end
 
+
+# Second round
 prompt = TTY::Prompt.new
 answer = prompt.select("First Round Complete:") do |menu|
     menu.choice "Team Stats", 1
@@ -84,6 +108,7 @@ if answer == 3
     end
 end
 
+# Conference finals
 prompt = TTY::Prompt.new
 answer = prompt.select("Second Round Complete:") do |menu|
     menu.choice "Team Stats", 1
@@ -96,6 +121,7 @@ if answer == 3
     end
 end
 
+# Stanley Cup finals
 prompt = TTY::Prompt.new
 answer = prompt.select("Conference Finals Complete:") do |menu|
     menu.choice "Team Stats", 1
@@ -103,10 +129,16 @@ answer = prompt.select("Conference Finals Complete:") do |menu|
     menu.choice "Simulate Stanley Cup Final", 3
 end
 if answer == 3
-        update_matches(t,14).save
+    update_matches(t,14).save
 end
 
+# Submit full tournament
 t.post(:finalize)
 
-
+# t.live_image_url
+# if t.matches(:first).player1_id == t.matches(:first).winner_id 
+#     puts "want them chips with the dip" 
+# else
+#     puts "unfortunately you lost"
+# end
 

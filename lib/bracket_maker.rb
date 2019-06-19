@@ -58,32 +58,59 @@ end
 
 # m.player1.name
 binding.pry
-team1_id = Team.all.find_by(name: m.player1.name).id
-team2_id = Team.all.find_by(name: m.player2.name).id
+m = t.matches[0]
 
-Player.all.select { |p| p.team_id == team1_id}
+def team_1_id(m)
+    Team.all.find_by(name: m.player1.name).id
+end
 
-# def give_goals(player_selector, goal_assigner)
-#     puts "player#{player_selector} scored #{goal_assigner} goals"
-# end
+def team_2_id(m)
+    Team.all.find_by(name: m.player2.name).id
+end
 
-# def assign_goals(score)
-#     current_goals = score.sum{|s| s[0].to_i}
-#     until current_goals == 0
-#         player_selector = rand(4)
-#         goal_assigner = rand(1..current_goals)
-#         current_goals = current_goals - goal_assigner
-#         give_goals(player_selector, goal_assigner)
-#     end
-# end
+def get_player_list(team_x_id)
+    Player.all.select { |p| p.team_id == team_x_id}
+end
 
+def give_goals(player_selector, goal_assigner)
+    player_selector.series_goals += goal_assigner
+    player_selector.total_goals += goal_assigner
+end
+
+def player_goal_calculator(player_list)
+    until current_goals == 0
+        goal_assigner = rand(1..current_goals)
+        current_goals -= goal_assigner
+        player_selector = get_player_list(team_x_id)[rand(4)]
+        give_goals(player_selector, goal_assigner)
+    end
+end
+
+def assign_goals(scores, player_list, team_x_id)
+    if team_x_id == team_1_id(m)
+        current_goals = scores.sum{|s| s[0].to_i}
+        player_goal_calculator(get_player_list(team_x_id))
+    elsif team_x_id == team_2_id(m)
+        current_goals = scores.sum{|s| s[2].to_i}
+        player_goal_calculator(get_player_list(team_x_id))
+    end
+end
 
 #~~~~~~~~~~~~~~~  RUN SERIES AND SUBMIT MATCHES ~~~~~~~~~~~~~~~#
-
 def update_matches(t, i)
     m = t.matches[i]
-    m.scores_csv = sim_playoff_series(m).join(",") # defined in sim_series
-    # add goal assign method
+
+    team_1_id = team_1_id(m)
+    team_2_id = team_2_id(m)
+
+    player1_list = get_player_list(team_1_id)
+    player2_list = get_player_list(team_2_id)
+
+    scores = sim_playoff_series(m) # defined in sim_series
+    m.scores_csv = scores.join(",")
+
+    assign_goals(scores, player1_list, team_1_id) # add goal assign method
+    assign_goals(scores, player2_list, team_2_id) # add goal assign method
     m
 end
 

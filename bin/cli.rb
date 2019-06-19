@@ -82,7 +82,6 @@ class CommandLineInterface
       playoff_teams
       end
     
-    
     def sort_teams
       sorted_teams = []
       unsorted_teams = pick_teams

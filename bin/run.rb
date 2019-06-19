@@ -1,6 +1,1 @@
-require_relative '../config/environment'
-
-
-
-puts "HELLO WORLD"
-
+require_relative '../lib/bracket_maker.rb'

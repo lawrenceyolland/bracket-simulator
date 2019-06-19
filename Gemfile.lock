@@ -25,20 +25,13 @@ GEM
     arel (7.1.4)
     artii (2.1.2)
     builder (3.2.3)
-    catpix (0.2.0)
-      docopt (~> 0.5, >= 0.5.0)
-      rmagick (~> 2.15, >= 2.15.2)
-      ruby-terminfo (~> 0.1, >= 0.1.1)
-      tco (~> 0.1, >= 0.1.8)
     challonge-api (0.2.0)
       activeresource
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
-    docopt (0.6.1)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     equatable (0.6.0)
-    espeak-ruby (1.0.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.1)
@@ -69,8 +62,6 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rmagick (2.16.0)
-    ruby-terminfo (0.1.1)
     sinatra (1.4.8)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -106,9 +97,7 @@ PLATFORMS
 
 DEPENDENCIES
   artii
-  catpix
   challonge-api
-  espeak-ruby
   launchy
   paint
   pry

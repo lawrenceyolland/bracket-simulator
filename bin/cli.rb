@@ -40,8 +40,13 @@ class CommandLineInterface
   end
 
 
-  puts "Would you like to use the 2019 playoff bracket? (y/n)"
-  input = gets.chomp
+  # puts "Would you like to use the 2019 playoff bracket? (y/n)"
+  # input = gets.chomp
+    prompt1 = TTY::Prompt.new
+    input = prompt1.select("Would you like to use the 2019 bracket or create your own?") do |menu|
+    menu.choice "2019 Bracket", 'y'
+    menu.choice "Create your own", 'n'
+    end
   if input == 'y'
     def team_hash
 

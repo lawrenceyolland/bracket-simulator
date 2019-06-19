@@ -12,6 +12,16 @@ t.url = SecureRandom.hex(10) # randomly generates a 10 character string
 t.tournament_type = 'single elimination'
 t.save
 
+
+Player.all.each do |player|
+    player.series_goals = 0
+    player.save 
+end
+# Player.all.each do |player|
+#     player.total_goals = 0
+#     player.save 
+# end
+
 url = "https://api.challonge.com/v1/tournaments/" + t.id.to_s + "/participants/bulk_add.json"
 teams = cli.team_hash
 
@@ -57,61 +67,84 @@ end
 # score = ["6-1","3-2","1-2","5-1","4-5","4-3"]
 
 # m.player1.name
-binding.pry
-m = t.matches[0]
+# binding.pry
+class AssignGoals
+    def team_1_id(m)
+        Team.all.find_by(name: m.player1.name).id
+    end
 
-def team_1_id(m)
-    Team.all.find_by(name: m.player1.name).id
-end
+    def team_2_id(m)
+        Team.all.find_by(name: m.player2.name).id
+    end
 
-def team_2_id(m)
-    Team.all.find_by(name: m.player2.name).id
-end
+    def get_player_list(team_x_id)
+        Player.all.select { |p| p.team_id == team_x_id}
+    end
 
-def get_player_list(team_x_id)
-    Player.all.select { |p| p.team_id == team_x_id}
-end
+    def give_goals(player, goal_assigner)
+        player.series_goals += goal_assigner
+        player.total_goals += goal_assigner
+    end
 
-def give_goals(player_selector, goal_assigner)
-    player_selector.series_goals += goal_assigner
-    player_selector.total_goals += goal_assigner
-end
+    def player_goal_calculator(player_list, current_goals)
+        until current_goals == 0
+            goal_assigner = rand(1..current_goals)
+            current_goals -= goal_assigner
+            player = player_list[rand(4)]
+            give_goals(player, goal_assigner)
+        end
+    end
 
-def player_goal_calculator(player_list)
-    until current_goals == 0
-        goal_assigner = rand(1..current_goals)
-        current_goals -= goal_assigner
-        player_selector = get_player_list(team_x_id)[rand(4)]
-        give_goals(player_selector, goal_assigner)
+    def assign_goals(scores, team_id, team_1_id, player_list)
+        team_id == team_1_id ? n = 0 : n = 2
+        current_goals = scores.sum { |s| s[n].to_i}
+        player_goal_calculator(player_list, current_goals)
     end
 end
-
-def assign_goals(scores, player_list, team_x_id)
-    if team_x_id == team_1_id(m)
-        current_goals = scores.sum{|s| s[0].to_i}
-        player_goal_calculator(get_player_list(team_x_id))
-    elsif team_x_id == team_2_id(m)
-        current_goals = scores.sum{|s| s[2].to_i}
-        player_goal_calculator(get_player_list(team_x_id))
-    end
-end
-
 #~~~~~~~~~~~~~~~  RUN SERIES AND SUBMIT MATCHES ~~~~~~~~~~~~~~~#
 def update_matches(t, i)
     m = t.matches[i]
 
-    team_1_id = team_1_id(m)
-    team_2_id = team_2_id(m)
+    ag = AssignGoals.new
 
-    player1_list = get_player_list(team_1_id)
-    player2_list = get_player_list(team_2_id)
+    team1_id = ag.team_1_id(m)
+    team2_id = ag.team_2_id(m)
+
+    player1_list = ag.get_player_list(team1_id)
+    player2_list = ag.get_player_list(team2_id)
 
     scores = sim_playoff_series(m) # defined in sim_series
     m.scores_csv = scores.join(",")
 
-    assign_goals(scores, player1_list, team_1_id) # add goal assign method
-    assign_goals(scores, player2_list, team_2_id) # add goal assign method
+    # assign team 1 players some goals
+    ag.assign_goals(scores, team1_id, team1_id, player1_list)
+    # assign team 2 players some goals
+    ag.assign_goals(scores, team2_id, team1_id, player2_list)
+
+    player1_list.each { |p| p.save}
+    player2_list.each { |p| p.save}
+
     m
+end
+
+def team_series_data(series_range,t)
+    teams = []
+    team_1 = t.matches.collect{|p| p.player1.name}[series_range]
+    team_2 = t.matches.collect{|p| p.player1.name}[series_range]
+    teams << [team_1, team_2].flatten
+    teams.flatten
+end
+
+def make_team_table(answer)
+    # each find by name
+    team = Team.all.find_by(name: answer)
+    puts team.img_path
+    puts "_____________________________________________________________________________"
+    puts "|    WINS     |   LOSSES     |    GAMES PLAYED    |       CHIPS             |"
+    puts "|#{team.wins} |#{team.losses}|#{team.games_played}|#{team.championship_wins}|"
+
+    # show - wins, losses, games played, champions? best round
+    # back
 end
 
 # first round
@@ -122,20 +155,27 @@ live_url = "https://challonge.com/" + t.url + "/fullscreen"
 Launchy::Browser.run(live_url)
 
 
-# Second round
 prompt = TTY::Prompt.new
 answer = prompt.select("First Round Complete:") do |menu|
     menu.choice "Team Stats", 1
     menu.choice "Player Stats", 2
     menu.choice "Simulate Second Round", 3
 end
-if answer == 3
-    for i in 8..11
-        update_matches(t,i).save
+if answer == 1
+    list = team_series_data(0..7,t)
+    prompt = TTY::Prompt.new
+    answer = prompt.select("Select Team:", list)
+    make_team_table(answer)
+elsif answer == 2
+
+# Second round
+elsif answer == 3
+        for i in 8..11
+            update_matches(t,i).save
     end
 end
 
-# Conference finals
+
 prompt = TTY::Prompt.new
 answer = prompt.select("Second Round Complete:") do |menu|
     menu.choice "Team Stats", 1
@@ -148,7 +188,7 @@ if answer == 3
     end
 end
 
-# Stanley Cup finals
+# Conference finals
 prompt = TTY::Prompt.new
 answer = prompt.select("Conference Finals Complete:") do |menu|
     menu.choice "Team Stats", 1
@@ -158,7 +198,7 @@ end
 if answer == 3
     update_matches(t,14).save
 end
-
+#  Stanley Cup finals
 # Submit full tournament
 t.post(:finalize)
 

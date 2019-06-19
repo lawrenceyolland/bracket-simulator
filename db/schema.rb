@@ -23,12 +23,20 @@ ActiveRecord::Schema.define(version: 4) do
 
   create_table "players", force: :cascade do |t|
     t.string  "name"
-    t.integer "goals"
+    t.integer "series_goals"
+    t.integer "total_goals"
+    t.integer "goals_per_game"
     t.string  "team_id"
   end
 
   create_table "teams", force: :cascade do |t|
     t.string  "name"
+    t.integer "wins"
+    t.integer "losses"
+    t.integer "games_played"
+    t.integer "championship_wins"
+    t.string  "best_round"
+    t.string  "img_path"
     t.integer "division_id"
   end
 

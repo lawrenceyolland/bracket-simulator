@@ -8,9 +8,9 @@
 #   :bg_fill => true,
 #   :resolution => "high"
 
-puts "Welcome to the"
+
 a = Artii::Base.new :font => 'slant'
-puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
+puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
 
 # puts Paint['Ruby', :red]
 
@@ -19,10 +19,10 @@ puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
 
 class CommandLineInterface
 
-    def greet
-        a = Artii::Base.new :font => 'slant'
-        puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
-    end
+    # def greet
+    #     a = Artii::Base.new :font => 'slant'
+    #     puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
+    # end
 
   #   def stanley
   #   Catpix::print_image "/Users/pasbynumbers/Downloads/stanley-cup-jay-fhjay-fh-stanley-cup-clip-art-469_1000.jpg",

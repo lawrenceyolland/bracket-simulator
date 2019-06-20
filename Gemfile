@@ -14,5 +14,6 @@ gem 'tco'
 gem 'paint'
 gem 'tty-prompt'
 gem 'terminal-table'
+gem 'tty-spinner'
 
 

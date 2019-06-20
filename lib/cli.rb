@@ -16,8 +16,14 @@ puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
 
 # prompt = TTY::Prompt.new
 
-
 class CommandLineInterface
+
+  def load_icon
+    spinner = TTY::Spinner.new("[:spinner] Loading...", format: :bouncing_ball)
+    spinner.auto_spin
+    sleep(3)
+    spinner.stop('Receiving data')
+  end
 
     # def greet
     #     a = Artii::Base.new :font => 'slant'
@@ -44,10 +50,11 @@ class CommandLineInterface
   # input = gets.chomp
     prompt1 = TTY::Prompt.new
     input = prompt1.select("Would you like to use the 2019 bracket or create your own?") do |menu|
-    menu.choice "2019 Bracket", 'y'
-    menu.choice "Create your own", 'n'
+    menu.choice "2019 Bracket", 1
+    menu.choice "Create your own", 2
     end
-  if input == 'y'
+    system 'clear'
+  if input == 1
     def team_hash
       
     team_hash = {"participants"=> [
@@ -67,36 +74,103 @@ class CommandLineInterface
         {"name"=>"Colorado Avalanche"},
         {"name"=>"Dallas Stars"},
         {"name"=>"Columbus Blue Jackets"}]}
+        self.load_icon
         team_hash
     end
-  elsif input == 'n'
- 
-    def pick_teams
-      prompt = TTY::Prompt.new
+  elsif input == 2
 
+    def pick_teams
       playoff_teams = []
-      playoff_teams << prompt.multi_select("Select 4 Teams from Atlantic Division:", get_division_teams(1), max:4, per_page: 10)
-      playoff_teams << prompt.multi_select("Select 4 Teams from Metropolitan Division:", get_division_teams(2), max:4, per_page: 10)
-      playoff_teams << prompt.multi_select("Select 4 Teams from Pacific Divsion:", get_division_teams(3), max:4, per_page: 10)
-      playoff_teams << prompt.multi_select("Select 4 Teams from Central Divsion:", get_division_teams(4), max:4, per_page: 10)
+      atlantic_pick_teams(playoff_teams)
+      metropolitan_pick_teams(playoff_teams)
+      pacific_pick_teams(playoff_teams)
+      central_pick_teams(playoff_teams)
+      system 'clear'
       playoff_teams
-      
+    end
+
+    # def pick_teams
+    #   prompt = TTY::Prompt.new
+    #   playoff_teams = []
+    #   playoff_teams << prompt.multi_select("Select 4 Teams from Atlantic Division:", get_division_teams(1), max:4, per_page: 10)
+    #   playoff_teams << prompt.multi_select("Select 4 Teams from Metropolitan Division:", get_division_teams(2), max:4, per_page: 10)
+    #   playoff_teams << prompt.multi_select("Select 4 Teams from Pacific Divsion:", get_division_teams(3), max:4, per_page: 10)
+    #   playoff_teams << prompt.multi_select("Select 4 Teams from Central Divsion:", get_division_teams(4), max:4, per_page: 10)
+    #   playoff_teams 
+    # end
+
+    def atlantic_pick_teams(playoff_teams)
+      prompt = TTY::Prompt.new
+      playoff_atl = []
+      playoff_atl << prompt.multi_select("Select 4 Teams from Atlantic Division:", get_division_teams(1), max:4, per_page: 10)
+      if playoff_atl.flatten.count != 4
+        playoff_atl.clear
+        system 'clear'
+        puts "You didn't select FOUR. Try again..."
+        atlantic_pick_teams(playoff_teams)
+      else
+      playoff_teams << playoff_atl
       end
-    
+    end
+ 
+    def metropolitan_pick_teams(playoff_teams)
+      prompt = TTY::Prompt.new
+      playoff_met = []
+      playoff_met << prompt.multi_select("Select 4 Teams from Metropolitan Division:", get_division_teams(2), max:4, per_page: 10)
+      if playoff_met.flatten.count != 4
+        playoff_met.clear
+        system 'clear'
+        puts "You didn't select FOUR. Try again..."
+        metropolitan_pick_teams(playoff_teams)
+      else
+      playoff_teams << playoff_met
+      end
+    end
+ 
+    def pacific_pick_teams(playoff_teams)
+      prompt = TTY::Prompt.new
+      playoff_pac = []
+      playoff_pac << prompt.multi_select("Select 4 Teams from Pacific Divsion:", get_division_teams(3), max:4, per_page: 10)
+      if playoff_pac.flatten.count != 4
+        playoff_pac.clear
+        system 'clear'
+        puts "You didn't select FOUR. Try again..."
+        pacific_pick_teams(playoff_teams)
+      else
+      playoff_teams << playoff_pac
+      end
+    end
+ 
+    def central_pick_teams(playoff_teams)
+      prompt = TTY::Prompt.new
+      playoff_cen = []
+       playoff_cen << prompt.multi_select("Select 4 Teams from Central Divsion:", get_division_teams(4), max:4, per_page: 10)
+        if playoff_cen.flatten.count != 4
+          playoff_cen.clear
+          system 'clear'
+          puts "Please select FOUR teams"
+          central_pick_teams(playoff_teams)
+        else
+        playoff_teams << playoff_cen
+        end
+    end
+ 
     def sort_teams
       sorted_teams = []
       unsorted_teams = pick_teams
       pos = [0,8,12,4, 5,13,9,1, 2,10,14,6, 7,15,11,3]
-        for i in pos
-          sorted_teams << unsorted_teams.flatten[i]
-        end
-        sorted_teams
+      for i in pos
+        sorted_teams << unsorted_teams.flatten[i]
+      end
+      sorted_teams
     end
+
       def team_hash
       team_hash = {"participants"=>[]}
       for i in sort_teams.flatten
-              team_hash["participants"] << {"name"=>Team.find_by(name: i).name}
+        team_hash["participants"] << {"name"=>Team.find_by(name: i).name}
       end
+      self.load_icon
       team_hash
     end
   end

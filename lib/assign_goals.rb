@@ -14,6 +14,7 @@ class AssignGoals
     def give_goals(player, goal_assigner)
         player.series_goals += goal_assigner
         player.total_goals += goal_assigner
+        player.save
     end
 
     def player_goal_calculator(player_list, current_goals)

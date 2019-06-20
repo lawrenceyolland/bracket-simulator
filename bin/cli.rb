@@ -49,7 +49,7 @@ class CommandLineInterface
     end
   if input == 'y'
     def team_hash
-
+      
     team_hash = {"participants"=> [
         {"name"=>"Tampa Bay Lightning"},
         {"name"=>"Nashville Predators"},
@@ -80,6 +80,7 @@ class CommandLineInterface
       playoff_teams << prompt.multi_select("Select 4 Teams from Pacific Divsion:", get_division_teams(3), max:4, per_page: 10)
       playoff_teams << prompt.multi_select("Select 4 Teams from Central Divsion:", get_division_teams(4), max:4, per_page: 10)
       playoff_teams
+      
       end
     
     def sort_teams

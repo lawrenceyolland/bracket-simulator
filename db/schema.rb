@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 4) do
     t.integer "series_goals"
     t.integer "total_goals"
     t.integer "goals_per_game"
-    t.string  "team_id"
+    t.integer "team_id"
   end
 
   create_table "teams", force: :cascade do |t|

@@ -5,7 +5,7 @@ class CreatePlayersTable < ActiveRecord::Migration[4.2]
             t.integer :series_goals
             t.integer :total_goals
             t.integer :goals_per_game
-            t.string :team_id
+            t.integer :team_id
         end
     end
 end

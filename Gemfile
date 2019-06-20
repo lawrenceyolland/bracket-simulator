@@ -13,7 +13,6 @@ gem 'artii'
 gem 'tco'
 gem 'paint'
 gem 'tty-prompt'
-# gem 'catpix'
-# gem "espeak-ruby"
+gem 'terminal-table'
 
 

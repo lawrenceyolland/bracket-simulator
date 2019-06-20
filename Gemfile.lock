@@ -72,6 +72,8 @@ GEM
     slop (3.6.0)
     sqlite3 (1.3.13)
     tco (0.1.8)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thread_safe (0.3.6)
     tilt (2.0.7)
     tty-color (0.5.0)
@@ -90,6 +92,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
+    unicode-display_width (1.6.0)
     wisper (2.0.0)
 
 PLATFORMS
@@ -107,6 +110,7 @@ DEPENDENCIES
   sinatra-activerecord
   sqlite3
   tco
+  terminal-table
   tty-prompt
 
 BUNDLED WITH

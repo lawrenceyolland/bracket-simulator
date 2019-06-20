@@ -14,6 +14,7 @@ url = "https://api.challonge.com/v1/tournaments/" + t.id.to_s + "/participants/b
 
 
 cli = CommandLineInterface.new
+round = Round.new(t)
 teams = cli.team_hash
 
     Player.all.each do |player|
@@ -381,7 +382,7 @@ end
 for i in 0..7
     update_matches(t,i).save  
 end
-round = 0
+
 round_menu1(t)
 
 

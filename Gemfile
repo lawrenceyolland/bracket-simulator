@@ -16,4 +16,3 @@ gem 'tty-prompt'
 gem 'terminal-table'
 gem 'tty-spinner'
 
-

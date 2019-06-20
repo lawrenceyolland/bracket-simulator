@@ -1,12 +1,18 @@
 class Round
     attr_accessor :round, :t
 
-    def initialize(round = 0, t)
+    def initialize(round = 0, t, player_team)
         @round = round
         @t = t
+        @player_team = player_team
     end
 
     def round_menu
+        if self.track_player_team 
+            puts "Congratulations" # 
+        else    
+            puts "Sorry your team has been eliminated"
+        end
         titles = ["First Round", "Second Round", "Conference Finals", "Stanley Cup Final"]
         prompt = TTY::Prompt.new
         answer = prompt.select("#{titles[self.round]} complete") do |menu|
@@ -25,8 +31,10 @@ class Round
         elsif answer == 3
             self.t.post(:finalize)
             self.t.destroy
-            puts "roll credits"
+            system 'clear'
+            puts "ROLL CREDITS"
         elsif answer == 4
+            system 'clear'
             self.increase_round
             self.run_round 
         end
@@ -88,6 +96,9 @@ class Round
         teams.flatten
     end
 
+    def track_player_team
+        self.team_series_data.include?(@player_team) #^^^^^^^^ this need to be for next round (check player team is in round+1)
+    end
     
 end
 

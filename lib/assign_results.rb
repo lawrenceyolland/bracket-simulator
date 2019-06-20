@@ -1,4 +1,5 @@
 class AssignResults
+    
     def team_1_id(m)
         Team.all.find_by(name: m.player1.name).id
     end
@@ -48,7 +49,6 @@ class AssignResults
         else 
             m.winner_id = m.player2_id 
         end
-        # score_csv = score
         score
     end
 
@@ -66,7 +66,7 @@ class AssignResults
     end
 
     def give_win(team_x_id, team_wins, score)
-        team = Team.all.find{|t| t.id == team_x_id}
+        team = Team.all.find { |t| t.id == team_x_id}
         team.wins += team_wins
         team.losses += (self.number_of_games(score) - team_wins)
         team.games_played += number_of_games(score)
@@ -95,5 +95,7 @@ class AssignResults
             player.save
         end 
     end
+
+    
 
 end

@@ -25,6 +25,21 @@ class CommandLineInterface
     spinner.stop('Receiving data')
   end
 
+
+  # def all_logo(team_name)
+  #   logo = team_name.downcase.split(" ").join("_")
+  #   Catpix::print_image "assets/logos/#{logo}.gif",
+  #   :limit_x => 0.7,
+  #   :limit_y => 0.7,
+  #   :center_x => true,
+  #   :center_y => true,
+  #   :resolution => "high"
+  # end
+
+  # def pick_team
+
+  # end
+
     # def greet
     #     a = Artii::Base.new :font => 'slant'
     #     puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
@@ -45,17 +60,20 @@ class CommandLineInterface
     Team.all.collect {|team| team.name if team.division_id == id}.compact.flatten
   end
 
-
   # puts "Would you like to use the 2019 playoff bracket? (y/n)"
   # input = gets.chomp
+
     prompt1 = TTY::Prompt.new
     input = prompt1.select("Would you like to use the 2019 bracket or create your own?") do |menu|
-    menu.choice "2019 Bracket", 1
-    menu.choice "Create your own", 2
+      menu.choice "2019 Bracket", 1
+      menu.choice "Create your own", 2
     end
-    system 'clear'
+
+  system 'clear'
+  
   if input == 1
-    def team_hash
+
+  def team_hash
       
     team_hash = {"participants"=> [
         {"name"=>"Tampa Bay Lightning"},
@@ -74,9 +92,15 @@ class CommandLineInterface
         {"name"=>"Colorado Avalanche"},
         {"name"=>"Dallas Stars"},
         {"name"=>"Columbus Blue Jackets"}]}
+        
+        array_of_teams = team_hash["participants"].collect { |t| t["name"]}
+        prompt = TTY::Prompt.new
+        player_team = prompt.select("Pick your team:", array_of_teams, per_page: 16)
         self.load_icon
-        team_hash
+      
+        return player_team, team_hash
     end
+
   elsif input == 2
 
     def pick_teams
@@ -170,8 +194,13 @@ class CommandLineInterface
       for i in sort_teams.flatten
         team_hash["participants"] << {"name"=>Team.find_by(name: i).name}
       end
+
+      array_of_teams = team_hash["participants"].collect { |t| t["name"]}
+      prompt = TTY::Prompt.new
+      player_team = prompt.select("Pick your team:", array_of_teams, per_page: 16)
+
       self.load_icon
-      team_hash
+      return player_team, team_hash
     end
   end
 

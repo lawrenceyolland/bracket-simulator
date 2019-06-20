@@ -23,8 +23,9 @@ class Round
         elsif answer == 2
             self.team_menu
         elsif answer == 3
-            self.roll_credits
-        # Second round
+            self.t.post(:finalize)
+            self.t.destroy
+            puts "roll credits"
         elsif answer == 4
             self.increase_round
             self.run_round 
@@ -45,15 +46,14 @@ class Round
 
     def launch_bracket
         Launchy::Browser.run("https://challonge.com/" + self.t.url + "/fullscreen")
+        system "clear"
     end
 
     def run_round
         for i in ranges[round]
             update_matches(self.t, i).save
         end
-        
-        self.round_menu
-        
+        self.round_menu 
     end
 
     def increase_round
@@ -62,6 +62,7 @@ class Round
 
     def make_team_table(answer)
         if answer == "Go Back"
+            system 'clear'
             round_menu
         else
         team = Team.all.find_by(name: answer)

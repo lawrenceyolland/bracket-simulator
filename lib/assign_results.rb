@@ -1,5 +1,4 @@
 class AssignResults
-    
     def team_1_id(m)
         Team.all.find_by(name: m.player1.name).id
     end
@@ -54,6 +53,7 @@ class AssignResults
     end
 
     def score_tally(score)
+        # team 1 => [0]
         score.collect { |s| s[0]>s[2]}
     end
     
@@ -80,4 +80,20 @@ class AssignResults
     def get_team(team_x_id)
         Team.all.select { |team| team.id == team_x_id}
     end
+
+    def chips
+        winner = Team.all.find_by(wins: 16)
+        winner.championship_wins +=1
+        winner.save
+    end
+
+    def gpg(team_x_id)
+        team = Team.all.find_by(id: team_x_id)
+        games_played = team.games_played
+        get_player_list(team_x_id).each do |player|
+            player.goals_per_game = player.total_goals / games_played
+            player.save
+        end 
+    end
+
 end

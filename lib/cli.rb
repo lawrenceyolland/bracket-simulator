@@ -174,10 +174,11 @@ class CommandLineInterface
       team_hash
     end
   end
-#   def player_team
-#     prompt = TTY::Prompt.new
-#     player_team = prompt.multi_select("Select your team:", team_hash)
-#     player_team
-# end
+
+  # def player_team
+  #   prompt = TTY::Prompt.new
+  #   player_team = prompt.multi_select("Select your team:", team_hash)
+  #   player_team
+  # end
 
 end

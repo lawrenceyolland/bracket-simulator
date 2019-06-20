@@ -4,7 +4,7 @@ Challonge::API.username = Access.username
 Challonge::API.key = Access.api_key
 
 t = Challonge::Tournament.new
-t.name = 'Stabley Cup 6000'
+t.name = 'Stabley Cup 6001'
 t.url = SecureRandom.hex(10)# randomly generates a 10 character string
  
 t.tournament_type = 'single elimination'
@@ -31,9 +31,6 @@ teams["api_key"] = Challonge::API.key
 RestClient.post(url, teams)
 
 t.start! # t.post(:start)
-
-#~~~~~~~~~~~~~~~~~RANDOMISE SERIES SCORES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
 
 #~~~~~~RUN SERIES AND SUBMIT MATCHES ~~~~~~~~~~~~~~~#
 def update_matches(t, i)
@@ -71,15 +68,12 @@ def update_matches(t, i)
     team1.each { |wl| wl.save}
     team2.each { |wl| wl.save}
 
-    m
-end
+    ar.gpg(team1_id)
+    ar.gpg(team2_id)
 
-def roll_credits(t)
-    t.post(:finalize)
-    # base_url = "https://api.challonge.com/v1/tournaments/" + t.id.to_s + ".json"
-    # RestClient.delete(base_url, {"api_key" => Challonge::API.key })
-    puts "ROll CREDITS"
-    # t.destroy
+    ar.chips if i == 14
+
+    m
 end
 
 rounds.run_round

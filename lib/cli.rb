@@ -8,9 +8,9 @@
 #   :bg_fill => true,
 #   :resolution => "high"
 
-puts "Welcome to the"
+
 a = Artii::Base.new :font => 'slant'
-puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
+puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
 
 # puts Paint['Ruby', :red]
 
@@ -19,10 +19,10 @@ puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
 
 class CommandLineInterface
 
-    def greet
-        a = Artii::Base.new :font => 'slant'
-        puts Paint[a.asciify('Stanley Cup Simulation!'), :blue, :bright, :bold, :black]
-    end
+    # def greet
+    #     a = Artii::Base.new :font => 'slant'
+    #     puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
+    # end
 
   #   def stanley
   #   Catpix::print_image "/Users/pasbynumbers/Downloads/stanley-cup-jay-fhjay-fh-stanley-cup-clip-art-469_1000.jpg",
@@ -49,7 +49,7 @@ class CommandLineInterface
     end
   if input == 'y'
     def team_hash
-
+      
     team_hash = {"participants"=> [
         {"name"=>"Tampa Bay Lightning"},
         {"name"=>"Nashville Predators"},
@@ -80,8 +80,8 @@ class CommandLineInterface
       playoff_teams << prompt.multi_select("Select 4 Teams from Pacific Divsion:", get_division_teams(3), max:4, per_page: 10)
       playoff_teams << prompt.multi_select("Select 4 Teams from Central Divsion:", get_division_teams(4), max:4, per_page: 10)
       playoff_teams
+      
       end
-    
     
     def sort_teams
       sorted_teams = []

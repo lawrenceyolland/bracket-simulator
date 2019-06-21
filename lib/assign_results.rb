@@ -22,7 +22,7 @@ class AssignResults
         until current_goals == 0
             goal_assigner = rand(1..current_goals)
             current_goals -= goal_assigner
-            player = player_list[rand(4)]
+            player = player_list[rand(5)]
             give_goals(player, goal_assigner)
         end
     end
@@ -95,7 +95,5 @@ class AssignResults
             player.save
         end 
     end
-
-    
 
 end

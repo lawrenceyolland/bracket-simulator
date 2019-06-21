@@ -1,22 +1,9 @@
-
-# Catpix::print_image "/Users/pasbynumbers/Downloads/shutterstock_1017189022.jpg",
-#   :limit_x => 1.0,
-#   :limit_y => 0,
-#   :center_x => true,
-#   :center_y => true,
-#   :bg => "white",
-#   :bg_fill => true,
-#   :resolution => "high"
-
-
 a = Artii::Base.new :font => 'slant'
-puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
-
-# puts Paint['Ruby', :red]
-
-# prompt = TTY::Prompt.new
+puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold]
 
 class CommandLineInterface
+
+  pid = fork{ exec 'afplay', 'lib/assets/o_canada_8bit.mp3' } 
 
   def load_icon
     spinner = TTY::Spinner.new("[:spinner] Loading...", format: :bouncing_ball)
@@ -25,49 +12,15 @@ class CommandLineInterface
     spinner.stop('Receiving data')
   end
 
-
-  # def all_logo(team_name)
-  #   logo = team_name.downcase.split(" ").join("_")
-  #   Catpix::print_image "assets/logos/#{logo}.gif",
-  #   :limit_x => 0.7,
-  #   :limit_y => 0.7,
-  #   :center_x => true,
-  #   :center_y => true,
-  #   :resolution => "high"
-  # end
-
-  # def pick_team
-
-  # end
-
-    # def greet
-    #     a = Artii::Base.new :font => 'slant'
-    #     puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
-    # end
-
-  #   def stanley
-  #   Catpix::print_image "/Users/pasbynumbers/Downloads/stanley-cup-jay-fhjay-fh-stanley-cup-clip-art-469_1000.jpg",
-  # :limit_x => 1.0,
-  # :limit_y => 0,
-  # :center_x => true,
-  # :center_y => true,
-  # :bg => "white",
-  # :bg_fill => true,
-  # :resolution => "medium"
-  #   end
-
   def get_division_teams(id)
     Team.all.collect {|team| team.name if team.division_id == id}.compact.flatten
   end
 
-  # puts "Would you like to use the 2019 playoff bracket? (y/n)"
-  # input = gets.chomp
-
-    prompt1 = TTY::Prompt.new
-    input = prompt1.select("Would you like to use the 2019 bracket or create your own?") do |menu|
-      menu.choice "2019 Bracket", 1
-      menu.choice "Create your own", 2
-    end
+  prompt1 = TTY::Prompt.new
+  input = prompt1.select("Would you like to use the 2019 bracket or create your own?") do |menu|
+    menu.choice "2019 Bracket", 1
+    menu.choice "Create your own", 2
+  end
 
   system 'clear'
   
@@ -97,21 +50,51 @@ class CommandLineInterface
         prompt = TTY::Prompt.new
         player_team = prompt.select("Pick your team:", array_of_teams, per_page: 16)
         self.load_icon
-      
         return player_team, team_hash
     end
 
   elsif input == 2
+    prompt = TTY::Prompt.new
+    answer = prompt.select("Would you like to create a team?") do |menu|
+      menu.choice "Yes", 1
+      menu.choice "No", 2
+    end
 
-    # def pick_teams
-    #   playoff_teams = []
-    #   atlantic_pick_teams(playoff_teams)
-    #   metropolitan_pick_teams(playoff_teams)
-    #   pacific_pick_teams(playoff_teams)
-    #   central_pick_teams(playoff_teams)
-    #   system 'clear'
-    #   playoff_teams
-    # end
+    if answer == 1
+
+    p1 = Player.all.find_by_id(156)
+    p2 = Player.all.find_by_id(157)
+    p3 = Player.all.find_by_id(158)
+    p4 = Player.all.find_by_id(159)
+    p5 = Player.all.find_by_id(160)
+
+    team_name = prompt.ask('What would you like to call your team?', required: true)
+      name1 = prompt.ask('Enter the name of your first player', default: 'Grayne Wetzky')
+      name2 = prompt.ask('Enter the name of your second player', default: 'Doug "The Thug" Glatt')
+      name3 = prompt.ask('Enter the name of your third player', default: 'Bob McKenzie')
+      name4 = prompt.ask('Enter the name of your fourth player', default: 'Happy Gilmore')
+      name5 = prompt.ask('Enter the name of your fifth player', default: 'Gordon Bombay')
+    
+      division_id = prompt.select('Which division will your team play in?') do |menu|
+        menu.choice "Atlantic Division", 1
+        menu.choice "Metropolitan Division", 2
+        menu.choice "Pacific Division", 3
+        menu.choice "Central Division", 4
+      end
+
+      default_team = Team.find_by_id(32)
+
+      # Update database
+      default_team.update(:name => team_name, :games_played => 0, :championship_wins => 0, :division_id => division_id)
+      p1.update(:name => name1, :series_goals => 0, :total_goals => 0, :goals_per_game => 0)
+      p2.update(:name => name2, :series_goals => 0, :total_goals => 0, :goals_per_game => 0)
+      p3.update(:name => name3, :series_goals => 0, :total_goals => 0, :goals_per_game => 0)
+      p4.update(:name => name4, :series_goals => 0, :total_goals => 0, :goals_per_game => 0)
+      p5.update(:name => name5, :series_goals => 0, :total_goals => 0, :goals_per_game => 0)
+
+    elsif answer == 2
+      
+    end
 
     def pick_teams
       playoff_teams = []
@@ -123,7 +106,7 @@ class CommandLineInterface
       playoff_teams
     end
 
-    def x_pick_team(playoff_teams,division_name, data_source)
+    def x_pick_team(playoff_teams, division_name, data_source)
       prompt = TTY::Prompt.new
       team_array = []
       team_array << prompt.multi_select("Select 4 Teams from #{division_name}:", get_division_teams(data_source), max:4, per_page: 10)
@@ -136,16 +119,6 @@ class CommandLineInterface
         playoff_teams << team_array
       end
     end
-    
-    # def pick_teams
-    #   prompt = TTY::Prompt.new
-    #   playoff_teams = []
-    #   playoff_teams << prompt.multi_select("Select 4 Teams from Atlantic Division:", get_division_teams(1), max:4, per_page: 10)
-    #   playoff_teams << prompt.multi_select("Select 4 Teams from Metropolitan Division:", get_division_teams(2), max:4, per_page: 10)
-    #   playoff_teams << prompt.multi_select("Select 4 Teams from Pacific Divsion:", get_division_teams(3), max:4, per_page: 10)
-    #   playoff_teams << prompt.multi_select("Select 4 Teams from Central Divsion:", get_division_teams(4), max:4, per_page: 10)
-    #   playoff_teams 
-    # end
  
     def sort_teams
       sorted_teams = []
@@ -166,17 +139,14 @@ class CommandLineInterface
       array_of_teams = team_hash["participants"].collect { |t| t["name"]}
       prompt = TTY::Prompt.new
       player_team = prompt.select("Pick your team:", array_of_teams, per_page: 16)
-
       self.load_icon
       return player_team, team_hash
     end
   end
 
-  # def player_team
-  #   prompt = TTY::Prompt.new
-  #   player_team = prompt.multi_select("Select your team:", team_hash)
-  #   player_team
-  # end
+end
+# cli.stanley
+# cli.greet
 
-cli.stanley
-cli.greet
+
+

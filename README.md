@@ -7,15 +7,7 @@ This is a Stanley Cup Playoff Simulator, where you can create a team or choose a
  - Create the playoff bracket of your choice
  - Compare player and team stats after each round of the competition
 
-Three Play modes:
- - Standard (randomize results)
- - Coin Flip (call heads or tails whether your team wins a series)
- - Higher/Lower (call higher/lower to compete in each game of a series)
- 
- **Resource:** (include challonge api link)
-
 #### Command Line CRUD App
-
 
 ## Instructions
 
@@ -24,4 +16,3 @@ Three Play modes:
 3. Sit back, relax and enjoy the excitement of the Stanley Cup right here in your terminal! The roar from the crowd! The chill of the ice! The gummy smiles of hockey players... But most importantly the realistic graphic
 
 ---
-

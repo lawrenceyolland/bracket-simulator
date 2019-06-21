@@ -177,6 +177,6 @@ class CommandLineInterface
   #   player_team = prompt.multi_select("Select your team:", team_hash)
   #   player_team
   # end
-
+end
 cli.stanley
 cli.greet

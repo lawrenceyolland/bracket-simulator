@@ -13,7 +13,7 @@ ActiveRecord::Base.logger = nil
 # ~~~~~~ Running App ~~~~~~~~ #
 # require_all 'config'
 require_all 'app'
-require_relative 'lib/access.rb'
+require_relative 'access.rb'
 
 require_relative 'lib/cli.rb'
 require_relative 'lib/round_class.rb'

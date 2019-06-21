@@ -19,7 +19,7 @@ class Round
             menu.choice "View Results", 1
             menu.choice "Team Stats", 2
             if round == 3
-                menu.choice "Exit", 3 
+                menu.choice "Next", 3 
             elsif menu.choice "Simulate Next Round", 4
             end
         end
@@ -29,10 +29,11 @@ class Round
         elsif answer == 2
             self.team_menu
         elsif answer == 3
+            self.chips_and_dip
             self.t.post(:finalize)
             self.t.destroy
-            system 'clear'
-            puts "ROLL CREDITS"
+            # system 'clear'
+            # puts "ROLL CREDITS"
         elsif answer == 4
             system 'clear'
             self.increase_round
@@ -44,7 +45,7 @@ class Round
         list = ["Go Back"]
         list << team_series_data
         prompt = TTY::Prompt.new
-        answer = prompt.select("Select Team:", list)
+        answer = prompt.select("Select Team:", list, per_page: 17)
         make_team_table(answer)
     end
 
@@ -97,8 +98,29 @@ class Round
     end
 
     def track_player_team
-        self.team_series_data.include?(@player_team) #^^^^^^^^ this need to be for next round (check player team is in round+1)
+        team_series_data.include?(@player_team) # ^^^^^ this need to be for next round (check player team is in round+1)
     end
     
+    def chips_and_dip
+        winner = Team.all.find_by(wins: 16)
+        eastern_champs, western_champs = conference_winners 
+        puts "#{winner.name.upcase} WINS THE STANLEY CUP!"
+        puts " "
+        puts " "
+        puts "#{eastern_champs} won the Eastern Conference and are awarded The Prince of Wales Trophy!"
+        puts " "
+        puts "#{western_champs} won the Western Conference and are awarded The Clarence S. Campbell Trophy!"
+        puts " "
+        # puts "#{player_name} won the Conn Smythe for most valuable player!"
+        # pid = fork{ exec 'afplay', 'lib/assets/outro_song.mp3' } 
+    end
+
+    def conference_winners
+        cw = Team.all.where("wins > 12")
+        eastern_champs = cw[0].name
+        western_champs = cw[1].name
+        return eastern_champs, western_champs
+    end
+
 end
 

@@ -41,7 +41,7 @@
 # edmonton_oilers = ["Connor McDavid", "Leon Draisaitl", "Ryan Nugent-Hopkins", "Darnell Nurse", "Alex Chiasson"]
 # los_angeles_kings = ["Drew Doughty", "Anze Kopitar", "Dustin Brown", "Ilya Kovalchuk", "Tyler Toffoli"]
 
-# default_team = ["Grayne Wetzky", "Doug 'The Thug' Glatt", "Ross 'The Boss' Rhea", "Happy Gilmore", "Gordan Bombay"]
+# default_team = ["Grayne Wetzky", "Doug 'The Thug' Glatt", Bob McKenzie, "Happy Gilmore", "Gordan Bombay"]
 
 # Reformatted to array of arrays...
 def player_array # reformatted from players   

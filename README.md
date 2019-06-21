@@ -16,3 +16,5 @@ This is a Stanley Cup Playoff Simulator, where you can create a team or choose a
 3. Sit back, relax and enjoy the excitement of the Stanley Cup right here in your terminal! The roar from the crowd! The chill of the ice! The gummy smiles of hockey players... But most importantly the realistic graphic
 
 ---
+
+Made in collaboration with [@EJWebber](https://github.com/ejwebber)

@@ -6,7 +6,6 @@ class CreateTeamsTable < ActiveRecord::Migration[4.2]
             t.integer :losses
             t.integer :games_played
             t.integer :championship_wins
-            t.string :best_round
             t.string :img_path
             t.integer :division_id
         end

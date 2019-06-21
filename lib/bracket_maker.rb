@@ -52,9 +52,6 @@ def update_matches(t, i)
     # randomly assign team 2 players some goals
     assign_results.assign_goals(scores, team2_id, team1_id, player2_list)
 
-    player1_list.each { |p| p.save}
-    player2_list.each { |p| p.save}
-
     t1_wins, t2_wins = assign_results.win_tally(scores)
 
     assign_results.give_win(team1_id, t1_wins, scores)
@@ -68,6 +65,10 @@ def update_matches(t, i)
 
     assign_results.gpg(team1_id)
     assign_results.gpg(team2_id)
+
+    player1_list.each { |p| p.save}
+    player2_list.each { |p| p.save}
+
 
     assign_results.chips if i == 14
 

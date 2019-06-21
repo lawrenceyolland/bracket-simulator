@@ -91,7 +91,7 @@ class AssignResults
         team = Team.all.find_by(id: team_x_id)
         games_played = team.games_played
         get_player_list(team_x_id).each do |player|
-            player.goals_per_game = player.total_goals / games_played
+            player.goals_per_game = (player.total_goals.to_f / games_played.to_f).round(3)
             player.save
         end 
     end

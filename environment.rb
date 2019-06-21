@@ -21,7 +21,7 @@ require_relative 'lib/assign_results.rb'
 require_relative 'lib/bracket_maker.rb'
 require_relative 'lib/game_modes.rb'
 
-require_all 'lib'
+# require_all 'lib'
 
 
 

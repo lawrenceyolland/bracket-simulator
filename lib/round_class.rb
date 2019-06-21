@@ -82,8 +82,8 @@ class Round
         puts table
         players = Player.all.select { |p| p.team_id == team.id}
         rows2 = []
-        players.each { |e| rows2 << [e.name, e.series_goals, e.total_goals]} # add goals per game
-        table2 = Terminal::Table.new :headings => ["Name", "Series Goals", "Total Goals"], :rows => rows2 
+        players.each { |e| rows2 << [e.name, e.series_goals, e.total_goals, e.goals_per_game]} 
+        table2 = Terminal::Table.new :headings => ["Name", "Series Goals", "Total Goals", "Goals Per Game"], :rows => rows2 
         puts table2
         team_menu
         end
@@ -118,7 +118,7 @@ class Round
         sleep 0.5
         centered_text "  P R O D U C E D  B Y"
         system "clear"
-        centered_text "E D  W E B B E R              L A W R E N C E  Y O L L A N D               P A S C A L  R A S S A B Y"
+        centered_text "E D  W E B B E R              L A W R E N C E  Y O L L A N D"
         sleep 15
         pid = fork{ exec 'killall', 'afplay' }
     end

@@ -178,4 +178,5 @@ class CommandLineInterface
   #   player_team
   # end
 
-end
+cli.stanley
+cli.greet

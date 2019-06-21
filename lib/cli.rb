@@ -1,7 +1,9 @@
 a = Artii::Base.new :font => 'slant'
-puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold, :black]
+puts Paint[a.asciify('Stanley Cup Simulator!'), :blue, :bright, :bold]
 
 class CommandLineInterface
+
+  pid = fork{ exec 'afplay', 'lib/assets/o_canada_8bit.mp3' } 
 
   def load_icon
     spinner = TTY::Spinner.new("[:spinner] Loading...", format: :bouncing_ball)
@@ -48,7 +50,6 @@ class CommandLineInterface
         prompt = TTY::Prompt.new
         player_team = prompt.select("Pick your team:", array_of_teams, per_page: 16)
         self.load_icon
-      
         return player_team, team_hash
     end
 
@@ -92,7 +93,7 @@ class CommandLineInterface
       p5.update(:name => name5, :series_goals => 0, :total_goals => 0, :goals_per_game => 0)
 
     elsif answer == 2
-      puts "Not creating team"
+      
     end
 
     def pick_teams
@@ -138,17 +139,11 @@ class CommandLineInterface
       array_of_teams = team_hash["participants"].collect { |t| t["name"]}
       prompt = TTY::Prompt.new
       player_team = prompt.select("Pick your team:", array_of_teams, per_page: 16)
-
       self.load_icon
       return player_team, team_hash
     end
   end
 
-  # def player_team
-  #   prompt = TTY::Prompt.new
-  #   player_team = prompt.multi_select("Select your team:", team_hash)
-  #   player_team
-  # end
 end
 # cli.stanley
 # cli.greet
